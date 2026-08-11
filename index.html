@@ -1,358 +1,613 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BedrockPacks</title>
+    <meta charset="UTF-8">
 
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
+    <meta
+        name="description"
+        content="BedrockPacks - Minecraft Bedrock add-ons and games"
+    >
 
+    <title>BedrockPacks</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div id="captchaScreen" class="overlay">
-  <div class="auth-box">
-    <div class="auth-icon">🧩</div>
-    <h2>Human Verification</h2>
-    <p>Click the green block to continue.</p>
-    <div id="captchaGrid">
-      <button type="button" class="captcha-block"></button>
-      <button type="button" class="captcha-block"></button>
-      <button type="button" class="captcha-block"></button>
-      <button type="button" class="captcha-block"></button>
+
+<!-- =====================================================
+     CAPTCHA
+     ===================================================== -->
+
+<div id="captchaScreen">
+
+    <div class="auth-box">
+
+        <h2>Verify You're Human</h2>
+
+        <p>
+            Click the green block to continue.
+        </p>
+
+        <div id="captchaGrid">
+
+            <button
+                type="button"
+                class="captcha-block">
+            </button>
+
+            <button
+                type="button"
+                class="captcha-block">
+            </button>
+
+            <button
+                type="button"
+                class="captcha-block">
+            </button>
+
+            <button
+                type="button"
+                class="captcha-block">
+            </button>
+
+            <button
+                type="button"
+                class="captcha-block">
+            </button>
+
+            <button
+                type="button"
+                class="captcha-block">
+            </button>
+
+            <button
+                type="button"
+                class="captcha-block">
+            </button>
+
+            <button
+                type="button"
+                class="captcha-block">
+            </button>
+
+            <button
+                type="button"
+                class="captcha-block">
+            </button>
+
+        </div>
+
+        <p id="captchaMessage">
+            Click the green block
+        </p>
+
     </div>
-    <p id="captchaMessage">Click the green block</p>
-  </div>
-</div>
-
-<div id="loginScreen" class="overlay" style="display:none">
-  <div class="auth-box">
-    <div class="auth-icon">🟩</div>
-    <h2>Welcome to BedrockPacks</h2>
-    <p>Sign in or create an offline account.</p>
-    <input id="username" type="text" placeholder="Username" autocomplete="username">
-    <input id="password" type="password" placeholder="Password" autocomplete="current-password">
-    <button type="button" id="loginButton">Sign In</button>
-    <button type="button" id="createButton" class="secondary">Create Account</button>
-    <p id="loginMessage"></p>
-  </div>
-</div>
-
-<!-- LOGIN -->
-<header>
-
-<div class="logo">
-🟩 BedrockPacks
-</div>
-
-<nav>
-
-<a href="#">Home</a>
-<a href="#downloads">Downloads</a>
-<a href="#features">Features</a>
-<a href="#about">About</a>
-
-</nav>
-
-</header>
-
-<section class="hero">
-
-<div class="hero-content">
-
-<h1>Discover Minecraft Bedrock Add-ons</h1>
-
-<p>
-
-Download amazing Add-ons, Maps, Resource Packs and more.
-
-</p>
-
-<div class="search">
-
-<input
-type="text"
-id="search"
-placeholder="Search downloads...">
-
-<button onclick="searchItems()">
-
-Search
-
-</button>
 
 </div>
 
-</div>
 
-</section>
+<!-- =====================================================
+     LOGIN
+     ===================================================== -->
 
-<section id="downloads">
+<div
+    id="loginScreen"
+    style="display:none;"
+>
 
-<h2 class="title">
+    <div class="auth-box">
 
-Popular Downloads
+        <h2>Welcome</h2>
 
-</h2>
-
-<div class="cards">
-
-<div class="card">
-
-<img src="https://picsum.photos/400/250?1">
-
-<h3>Fantasy Add-on</h3>
-
-<p>
-
-Adds dragons, castles and magical mobs.
-
-</p>
-
-<button onclick="download('Fantasy Add-on.mcaddon')">
-
-Download
-
-</button>
-
-</div>
-
-<div class="card">
-
-<img src="https://picsum.photos/400/250?2">
-
-<h3>SkyBlock Map</h3>
-
-<p>
-
-Challenge yourself on floating islands.
-
-</p>
-
-<button onclick="download('SkyBlockMap.mcworld')">
-
-Download
-
-</button>
-
-</div>
-
-<div class="card">
-
-<img src="https://picsum.photos/400/250?3">
-
-<h3>RTX Resource Pack</h3>
-
-<p>
-
-Beautiful realistic graphics.
-
-</p>
-
-<button onclick="download('RTX_Pack.mcaddon')">
-
-Download
-
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="features">
-
-<h2 class="title">
-
-Why Choose BedrockPacks?
-
-</h2>
-
-<div class="feature-grid">
-
-<div class="feature">
-
-<h3>
-
-⚡ Fast Downloads
-
-</h3>
-
-<p>
-
-Quick and reliable downloads.
-
-</p>
-
-</div>
-
-<div class="feature">
-
-<h3>
-
-🎮 Bedrock Compatible
-
-</h3>
-
-<p>
-
-Works with Minecraft Bedrock Edition.
-
-</p>
-
-</div>
-
-<div class="feature">
-
-<h3>
-
-⭐ High Quality
-
-</h3>
-
-<p>
-
-Carefully selected content.
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="feedback" class="feedback-section">
-
-    <h2 class="title">Send Us Feedback</h2>
-
-    <p class="feedback-subtitle">
-        Tell us what you think about BedrockPacks.
-    </p>
-
-    <form id="feedbackForm" action="https://formsubmit.co/zain.gshare@gmail.com" method="POST" target="_self">
-<input type="hidden" name="_subject" value="New BedrockPacks Feedback">
-<input type="hidden" name="_template" value="table">
-<input type="hidden" name="_captcha" value="true">
-
+        <p>
+            Login or create an account.
+        </p>
 
         <input
             type="text"
-            id="feedbackName"
-            placeholder="Your name"
-            required
+            id="username"
+            placeholder="Username"
+            autocomplete="username"
         >
 
         <input
-            type="email"
-            id="feedbackEmail"
-            placeholder="Your email"
-            required
+            type="password"
+            id="password"
+            placeholder="Password"
+            autocomplete="current-password"
         >
 
-        <select id="feedbackRating" required>
-            <option value="">Rate our website</option>
-            <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
-            <option value="4">⭐⭐⭐⭐ Very Good</option>
-            <option value="3">⭐⭐⭐ Good</option>
-            <option value="2">⭐⭐ Needs Improvement</option>
-            <option value="1">⭐ Poor</option>
-        </select>
-
-        <textarea
-            id="feedbackMessage"
-            placeholder="Write your feedback..."
-            rows="6"
-            required
-        ></textarea>
-
-        <button type="submit">
-            Send Feedback
+        <button
+            type="button"
+            id="loginButton"
+        >
+            Login
         </button>
 
-    </form>
+        <button
+            type="button"
+            id="createButton"
+            class="secondary"
+        >
+            Create Account
+        </button>
 
-    <p id="feedbackResult"></p>
-
-</section>
-
-<section id="game">
-    <h2 class="title">Secret
-        🎮BedrockPacks Block World</h2>
-
-    <div class="game-container">
-
-        <canvas id="gameCanvas"></canvas>
-<div id="mobileControls">
-  <div class="mc-left">
-    <button type="button" data-game-key="left">◀</button>
-    <button type="button" data-game-key="right">▶</button>
-  </div>
-  <div class="mc-right">
-    <button type="button" data-game-key="jump">▲</button>
-    <button type="button" data-game-key="break">⛏</button>
-  </div>
-</div>
-
-
-        <div class="game-hud">
-            ❤️ Health: <span id="gameHealth">100</span>
-            &nbsp; | &nbsp;
-            🧱 Blocks: <span id="gameBlocks">0</span>
-        </div>
-
-        <div class="game-help">
-            A / D = Move &nbsp; | &nbsp;
-            W / Space = Jump &nbsp; | &nbsp;
-            Click = Break Block
-        </div>
+        <p id="loginMessage"></p>
 
     </div>
-</section>
-
-<section id="about">
-
-<h2 class="title">
-
-About
-
-</h2>
-
-<p class="about">
-
-BedrockPacks is a Minecraft-inspired website made as a school project.
-
-Browse Add-ons, Maps and Resource Packs through a modern interface.
-
-</p>
-
-</section>
-
-
-<footer>
-
-<div>
-
-© 2026 BedrockPacks
 
 </div>
 
-<div>
 
-Made with HTML • CSS • JavaScript
+<!-- =====================================================
+     MAIN WEBSITE
+     ===================================================== -->
+
+<div id="website">
+
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="logo">
+            BedrockPacks
+        </div>
+
+        <nav>
+
+            <a href="#home">
+                Home
+            </a>
+
+            <a href="#packs">
+                Packs
+            </a>
+
+            <a href="#game">
+                Game
+            </a>
+
+            <a href="#feedback">
+                Feedback
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =================================================
+         HERO
+         ================================================= -->
+
+    <section
+        id="home"
+        class="hero"
+    >
+
+        <h1>
+            BedrockPacks
+        </h1>
+
+        <p>
+            Discover Minecraft Bedrock add-ons,
+            packs and games.
+        </p>
+
+
+        <!-- SEARCH -->
+
+        <div class="search">
+
+            <input
+                type="search"
+                id="search"
+                placeholder="Search packs..."
+                autocomplete="off"
+            >
+
+            <button
+                type="button"
+                onclick="searchItems()"
+            >
+                Search
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         PACKS
+         ================================================= -->
+
+    <section id="packs">
+
+        <h2 class="title">
+            Minecraft Packs
+        </h2>
+
+
+        <div class="cards">
+
+
+            <!-- PACK 1 -->
+
+            <div class="card">
+
+                <div class="card-content">
+
+                    <h3>
+                        Fantasy Add-on
+                    </h3>
+
+                    <p>
+                        A fantasy-themed Minecraft
+                        Bedrock add-on.
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="download('Fantasy Add-on')"
+                    >
+                        Download
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PACK 2 -->
+
+            <div class="card">
+
+                <div class="card-content">
+
+                    <h3>
+                        RTX Pack
+                    </h3>
+
+                    <p>
+                        A Minecraft Bedrock
+                        graphics pack.
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="download('RTX Pack')"
+                    >
+                        Download
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PACK 3 -->
+
+            <div class="card">
+
+                <div class="card-content">
+
+                    <h3>
+                        SkyBlock
+                    </h3>
+
+                    <p>
+                        A SkyBlock experience
+                        for Minecraft Bedrock.
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="download('SkyBlock')"
+                    >
+                        Download
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PACK 4 -->
+
+            <div class="card">
+
+                <div class="card-content">
+
+                    <h3>
+                        Fantasy Pack
+                    </h3>
+
+                    <p>
+                        Explore a new fantasy
+                        world in Bedrock.
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="download('Fantasy Pack')"
+                    >
+                        Download
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         GAME
+         ================================================= -->
+
+    <section
+        id="game"
+        class="game-section"
+    >
+
+        <h2 class="title">
+            🎮 BedrockPacks Game
+        </h2>
+
+
+        <div class="game-container">
+
+
+            <!-- GAME CANVAS -->
+
+            <canvas
+                id="gameCanvas"
+            ></canvas>
+
+
+            <!-- GAME HUD -->
+
+            <div class="game-hud">
+
+                Blocks broken:
+                <span id="gameBlocks">
+                    0
+                </span>
+
+            </div>
+
+
+            <!-- MOBILE CONTROLS -->
+
+            <div id="mobileControls">
+
+
+                <div class="mc-left">
+
+                    <button
+                        type="button"
+                        data-game-key="left"
+                        aria-label="Move left"
+                    >
+                        ◀
+                    </button>
+
+                    <button
+                        type="button"
+                        data-game-key="right"
+                        aria-label="Move right"
+                    >
+                        ▶
+                    </button>
+
+                </div>
+
+
+                <div class="mc-right">
+
+                    <button
+                        type="button"
+                        data-game-key="jump"
+                        aria-label="Jump"
+                    >
+                        ▲
+                    </button>
+
+                    <button
+                        type="button"
+                        data-game-key="break"
+                        aria-label="Break block"
+                    >
+                        ⛏
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="game-help">
+
+                PC:
+                A/D or ←/→ to move,
+                W/Space to jump,
+                E to break.
+
+                <br>
+
+                Mobile:
+                use the buttons and tap blocks.
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         FEEDBACK
+         ================================================= -->
+
+    <section
+        id="feedback"
+        class="feedback-section"
+    >
+
+        <h2 class="title">
+            Feedback
+        </h2>
+
+        <p class="feedback-subtitle">
+            Tell us what you think about the website.
+        </p>
+
+
+        <form
+            id="feedbackForm"
+            action="https://formsubmit.co/zain.gshare@gmail.com"
+            method="POST"
+        >
+
+
+            <!-- Email -->
+
+            <input
+                type="email"
+                name="email"
+                placeholder="Your email"
+                required
+            >
+
+
+            <!-- Name -->
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Your name"
+                required
+            >
+
+
+            <!-- Rating -->
+
+            <select
+                name="rating"
+                required
+            >
+
+                <option value="">
+                    Choose a rating
+                </option>
+
+                <option value="5">
+                    ⭐⭐⭐⭐⭐ Excellent
+                </option>
+
+                <option value="4">
+                    ⭐⭐⭐⭐ Very good
+                </option>
+
+                <option value="3">
+                    ⭐⭐⭐ Good
+                </option>
+
+                <option value="2">
+                    ⭐⭐ Needs improvement
+                </option>
+
+                <option value="1">
+                    ⭐ Bad
+                </option>
+
+            </select>
+
+
+            <!-- Feedback -->
+
+            <textarea
+                name="message"
+                placeholder="Write your feedback..."
+                required
+            ></textarea>
+
+
+            <!-- FormSubmit settings -->
+
+            <input
+                type="hidden"
+                name="_subject"
+                value="New BedrockPacks Feedback"
+            >
+
+            <input
+                type="hidden"
+                name="_captcha"
+                value="false"
+            >
+
+            <input
+                type="hidden"
+                name="_template"
+                value="table"
+            >
+
+
+            <!-- Submit -->
+
+            <button
+                type="submit"
+            >
+                Send Feedback
+            </button>
+
+
+        </form>
+
+    </section>
+
+
+    <!-- =================================================
+         FOOTER
+         ================================================= -->
+
+    <footer>
+
+        <p>
+            © 2026 BedrockPacks
+        </p>
+
+        <p>
+            Minecraft Bedrock community project
+        </p>
+
+    </footer>
+
 
 </div>
 
-</footer>
 
-
-
-
-
+<!-- =====================================================
+     JAVASCRIPT
+     ===================================================== -->
 
 <script src="script.js"></script>
+
 </body>
 </html>
