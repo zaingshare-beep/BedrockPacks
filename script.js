@@ -5,100 +5,98 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* =======================================================
-     CAPTCHA
-     ======================================================= */
+/* ================= CAPTCHA ================= */
 
-  const captchaScreen = document.getElementById("captchaScreen");
-  const loginScreen = document.getElementById("loginScreen");
+const captchaScreen =
+    document.getElementById("captchaScreen");
 
-  const captchaBlocks = [
-    ...document.querySelectorAll(".captcha-block")
-  ];
+const captchaBlocks =
+    document.querySelectorAll(".captcha-block");
 
-  const captchaMessage =
+const captchaMessage =
     document.getElementById("captchaMessage");
 
-  let correctBlock = 0;
+let correctBlock = 0;
 
-  function createCaptcha() {
+
+function createCaptcha() {
 
     if (captchaBlocks.length === 0) {
-      return;
+        console.error("CAPTCHA blocks were not found.");
+        return;
     }
 
     correctBlock =
-      Math.floor(Math.random() * captchaBlocks.length);
+        Math.floor(
+            Math.random() * captchaBlocks.length
+        );
 
     captchaBlocks.forEach((block, index) => {
 
-      block.classList.remove("correct");
+        block.classList.remove("correct");
 
-      if (index === correctBlock) {
-        block.classList.add("correct");
-      }
+        if (index === correctBlock) {
+            block.classList.add("correct");
+        }
 
     });
 
     if (captchaMessage) {
+        captchaMessage.textContent =
+            "Click the green block";
 
-      captchaMessage.textContent =
-        "Click the green block";
-
-      captchaMessage.style.color = "#aaa";
+        captchaMessage.style.color =
+            "#aaa";
     }
-  }
+}
 
-  captchaBlocks.forEach((block, index) => {
 
-    block.addEventListener("click", () => {
+captchaBlocks.forEach((block, index) => {
 
-      if (index === correctBlock) {
+    block.addEventListener("click", function () {
 
-        if (captchaMessage) {
+        if (index === correctBlock) {
 
-          captchaMessage.textContent =
-            "✓ Verification successful!";
+            captchaMessage.textContent =
+                "✓ Correct!";
 
-          captchaMessage.style.color =
-            "#57d163";
+            captchaMessage.style.color =
+                "#57d163";
+
+            setTimeout(() => {
+
+                captchaScreen.style.display =
+                    "none";
+
+                const loginScreen =
+                    document.getElementById("loginScreen");
+
+                if (loginScreen) {
+                    loginScreen.style.display =
+                        "flex";
+                }
+
+            }, 500);
+
+        } else {
+
+            captchaMessage.textContent =
+                "✕ Wrong block! Try again.";
+
+            captchaMessage.style.color =
+                "#ff5555";
+
+            setTimeout(() => {
+                createCaptcha();
+            }, 600);
         }
-
-        setTimeout(() => {
-
-          if (captchaScreen) {
-            captchaScreen.style.display = "none";
-          }
-
-          if (loginScreen) {
-            loginScreen.style.display = "flex";
-          }
-
-        }, 500);
-
-      } else {
-
-        if (captchaMessage) {
-
-          captchaMessage.textContent =
-            "✕ Wrong block! Try again.";
-
-          captchaMessage.style.color =
-            "#ff5555";
-        }
-
-        setTimeout(() => {
-          createCaptcha();
-        }, 500);
-      }
 
     });
 
-  });
-
-  createCaptcha();
+});
 
 
+createCaptcha();
   /* =======================================================
      LOGIN / ACCOUNT SYSTEM
      ======================================================= */
