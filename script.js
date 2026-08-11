@@ -1,179 +1,1765 @@
+/* =========================================================
+   BEDROCKPACKS - COMPLETE SCRIPT.JS
+   CAPTCHA + LOGIN + SEARCH + DOWNLOADS + FEEDBACK + GAME
+   ========================================================= */
+
 document.addEventListener("DOMContentLoaded", () => {
-  // ---------- Search ----------
-  window.searchItems = function(){
-    const q = (document.getElementById("search")?.value || "").trim().toLowerCase();
-    document.querySelectorAll(".card").forEach(card => {
-      card.style.display = card.textContent.toLowerCase().includes(q) ? "" : "none";
+
+  /* =======================================================
+     CAPTCHA
+     ======================================================= */
+
+  const captchaScreen = document.getElementById("captchaScreen");
+  const loginScreen = document.getElementById("loginScreen");
+
+  const captchaBlocks = [
+    ...document.querySelectorAll(".captcha-block")
+  ];
+
+  const captchaMessage =
+    document.getElementById("captchaMessage");
+
+  let correctBlock = 0;
+
+  function createCaptcha() {
+
+    if (captchaBlocks.length === 0) {
+      return;
+    }
+
+    correctBlock =
+      Math.floor(Math.random() * captchaBlocks.length);
+
+    captchaBlocks.forEach((block, index) => {
+
+      block.classList.remove("correct");
+
+      if (index === correctBlock) {
+        block.classList.add("correct");
+      }
+
     });
+
+    if (captchaMessage) {
+
+      captchaMessage.textContent =
+        "Click the green block";
+
+      captchaMessage.style.color = "#aaa";
+    }
+  }
+
+  captchaBlocks.forEach((block, index) => {
+
+    block.addEventListener("click", () => {
+
+      if (index === correctBlock) {
+
+        if (captchaMessage) {
+
+          captchaMessage.textContent =
+            "✓ Verification successful!";
+
+          captchaMessage.style.color =
+            "#57d163";
+        }
+
+        setTimeout(() => {
+
+          if (captchaScreen) {
+            captchaScreen.style.display = "none";
+          }
+
+          if (loginScreen) {
+            loginScreen.style.display = "flex";
+          }
+
+        }, 500);
+
+      } else {
+
+        if (captchaMessage) {
+
+          captchaMessage.textContent =
+            "✕ Wrong block! Try again.";
+
+          captchaMessage.style.color =
+            "#ff5555";
+        }
+
+        setTimeout(() => {
+          createCaptcha();
+        }, 500);
+      }
+
+    });
+
+  });
+
+  createCaptcha();
+
+
+  /* =======================================================
+     LOGIN / ACCOUNT SYSTEM
+     ======================================================= */
+
+  const username =
+    document.getElementById("username");
+
+  const password =
+    document.getElementById("password");
+
+  const loginButton =
+    document.getElementById("loginButton");
+
+  const createButton =
+    document.getElementById("createButton");
+
+  const loginMessage =
+    document.getElementById("loginMessage");
+
+  let accounts = {};
+
+  try {
+
+    accounts = JSON.parse(
+      localStorage.getItem("bedrockAccounts") || "{}"
+    );
+
+  } catch (error) {
+
+    accounts = {};
+
+  }
+
+
+  function showLoginMessage(message, success = false) {
+
+    if (!loginMessage) {
+      return;
+    }
+
+    loginMessage.textContent = message;
+
+    loginMessage.style.color =
+      success ? "#57d163" : "#ff5555";
+  }
+
+
+  function createAccount(event) {
+
+    if (event) {
+      event.preventDefault();
+    }
+
+    const name =
+      username ? username.value.trim() : "";
+
+    const pass =
+      password ? password.value : "";
+
+
+    if (!name || !pass) {
+
+      showLoginMessage(
+        "Enter a username and password."
+      );
+
+      return;
+    }
+
+
+    if (accounts[name]) {
+
+      showLoginMessage(
+        "Username already exists."
+      );
+
+      return;
+    }
+
+
+    accounts[name] = {
+      password: pass
+    };
+
+
+    localStorage.setItem(
+      "bedrockAccounts",
+      JSON.stringify(accounts)
+    );
+
+
+    localStorage.setItem(
+      "bedrockUser",
+      name
+    );
+
+
+    showLoginMessage(
+      "✓ Account created!",
+      true
+    );
+
+
+    setTimeout(() => {
+
+      if (loginScreen) {
+        loginScreen.style.display = "none";
+      }
+
+    }, 500);
+
+  }
+
+
+  function login(event) {
+
+    if (event) {
+      event.preventDefault();
+    }
+
+    const name =
+      username ? username.value.trim() : "";
+
+    const pass =
+      password ? password.value : "";
+
+
+    if (!name || !pass) {
+
+      showLoginMessage(
+        "Enter a username and password."
+      );
+
+      return;
+    }
+
+
+    if (
+      accounts[name] &&
+      accounts[name].password === pass
+    ) {
+
+      localStorage.setItem(
+        "bedrockUser",
+        name
+      );
+
+
+      showLoginMessage(
+        "✓ Welcome, " + name + "!",
+        true
+      );
+
+
+      setTimeout(() => {
+
+        if (loginScreen) {
+          loginScreen.style.display = "none";
+        }
+
+      }, 500);
+
+
+    } else {
+
+      showLoginMessage(
+        "Incorrect username or password."
+      );
+
+    }
+
+  }
+
+
+  if (loginButton) {
+
+    loginButton.addEventListener(
+      "click",
+      login
+    );
+
+  }
+
+
+  if (createButton) {
+
+    createButton.addEventListener(
+      "click",
+      createAccount
+    );
+
+  }
+
+
+  if (password) {
+
+    password.addEventListener(
+      "keydown",
+      event => {
+
+        if (event.key === "Enter") {
+
+          login(event);
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+     If the user already logged in before,
+     don't show CAPTCHA/login again.
+  */
+
+  if (
+    localStorage.getItem("bedrockUser")
+  ) {
+
+    if (captchaScreen) {
+      captchaScreen.style.display = "none";
+    }
+
+    if (loginScreen) {
+      loginScreen.style.display = "none";
+    }
+
+  }
+
+
+  /* =======================================================
+     SEARCH
+     ======================================================= */
+
+  window.searchItems = function () {
+
+    const searchBox =
+      document.getElementById("search");
+
+    if (!searchBox) {
+      return;
+    }
+
+
+    const query =
+      searchBox.value
+        .trim()
+        .toLowerCase();
+
+
+    const cards =
+      document.querySelectorAll(".card");
+
+
+    cards.forEach(card => {
+
+      const text =
+        card.textContent.toLowerCase();
+
+
+      if (text.includes(query)) {
+
+        card.style.display = "";
+
+      } else {
+
+        card.style.display = "none";
+
+      }
+
+    });
+
   };
-  document.getElementById("search")?.addEventListener("input", window.searchItems);
 
-  // ---------- Downloads ----------
-  window.download = function(file){
-    const a = document.createElement("a");
-    a.href = file.startsWith("packs/") ? file : "packs/" + file;
-    a.download = a.href.split("/").pop();
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+
+  const search =
+    document.getElementById("search");
+
+
+  if (search) {
+
+    search.addEventListener(
+      "input",
+      window.searchItems
+    );
+
+  }
+
+
+  /* =======================================================
+     DOWNLOAD SYSTEM
+     ======================================================= */
+
+  /*
+     IMPORTANT:
+
+     Your GitHub repository should look like:
+
+     packs/
+       fantasy-addon.mcpack
+       rtx-pack.mcpack
+       skyblock.mcpack
+  */
+
+
+  const packFiles = {
+
+    "Fantasy Add-on":
+      "packs/fantasy-addon.mcpack",
+
+    "RTX Pack":
+      "packs/rtx-pack.mcpack",
+
+    "SkyBlock":
+      "packs/skyblock.mcpack",
+
+    "Fantasy Pack":
+      "packs/fantasy-addon.mcpack"
+
   };
 
-  // ---------- Feedback ----------
-  // The feedback form is submitted normally to FormSubmit so the browser does not
-  // intercept it. The recipient is configured in index.html.
 
-  // ---------- Responsive Block Game ----------
-  const canvas = document.getElementById("gameCanvas");
-  if (!canvas) return;
+  window.download = function (file) {
 
-  const ctx = canvas.getContext("2d");
+    let path = file;
+
+
+    /*
+       If the filename isn't already a path,
+       put it inside the packs folder.
+    */
+
+    if (!path.includes("/")) {
+
+      if (packFiles[file]) {
+
+        path = packFiles[file];
+
+      } else {
+
+        path = "packs/" + file;
+
+      }
+
+    }
+
+
+    const link =
+      document.createElement("a");
+
+
+    link.href = path;
+
+    link.download =
+      path.split("/").pop();
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+  };
+
+
+  /* =======================================================
+     FEEDBACK
+     ======================================================= */
+
+  /*
+     The feedback form should contain:
+
+     action="https://formsubmit.co/zain.gshare@gmail.com"
+     method="POST"
+
+     This allows GitHub Pages to send the form
+     through FormSubmit.
+
+     JavaScript does NOT prevent the form from
+     submitting, so the email service can receive it.
+  */
+
+
+  const feedbackForm =
+    document.getElementById("feedbackForm");
+
+
+  if (feedbackForm) {
+
+    feedbackForm.addEventListener(
+      "submit",
+      event => {
+
+        /*
+           Let the browser submit the form normally.
+
+           DO NOT use:
+           event.preventDefault();
+
+           because that would stop the email.
+        */
+
+      }
+    );
+
+  }
+
+
+  /* =======================================================
+     GAME
+     ======================================================= */
+
+  const canvas =
+    document.getElementById("gameCanvas");
+
+
+  /*
+     If there isn't a game canvas,
+     stop the game code.
+  */
+
+  if (!canvas) {
+    return;
+  }
+
+
+  const ctx =
+    canvas.getContext("2d");
+
+
   const TILE = 40;
-  const WORLD_W = 120;
-  const WORLD_H = 20;
-  const world = Array.from({length:WORLD_H}, (_,y) =>
-    Array.from({length:WORLD_W}, () => y >= 11 ? (y === 11 ? "grass" : "dirt") : null)
+
+  const WORLD_WIDTH = 120;
+
+  const WORLD_HEIGHT = 20;
+
+
+  /* =======================================================
+     WORLD
+     ======================================================= */
+
+  const world =
+    Array.from(
+      { length: WORLD_HEIGHT },
+      (_, y) =>
+
+        Array.from(
+          { length: WORLD_WIDTH },
+          () => {
+
+            if (y >= 11) {
+
+              if (y === 11) {
+                return "grass";
+              }
+
+              return "dirt";
+
+            }
+
+            return null;
+
+          }
+        )
+
+    );
+
+
+  /* =======================================================
+     TREES
+     ======================================================= */
+
+  function createTree(x) {
+
+    for (let y = 8; y <= 10; y++) {
+
+      if (
+        x >= 0 &&
+        x < WORLD_WIDTH
+      ) {
+
+        world[y][x] = "wood";
+
+      }
+
+    }
+
+
+    for (
+      let dx = -2;
+      dx <= 2;
+      dx++
+    ) {
+
+      for (
+        let dy = -2;
+        dy <= 0;
+        dy++
+      ) {
+
+        const treeX =
+          x + dx;
+
+        const treeY =
+          8 + dy;
+
+
+        if (
+          treeX >= 0 &&
+          treeX < WORLD_WIDTH &&
+          treeY >= 0 &&
+          treeY < WORLD_HEIGHT
+        ) {
+
+          world[treeY][treeX] =
+            "leaves";
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+  [
+    10,
+    25,
+    45,
+    70,
+    95
+  ].forEach(createTree);
+
+
+  /* =======================================================
+     PLAYER
+     ======================================================= */
+
+  const player = {
+
+    x: 300,
+
+    y: 100,
+
+    width: 28,
+
+    height: 38,
+
+    velocityX: 0,
+
+    velocityY: 0,
+
+    grounded: false
+
+  };
+
+
+  /* =======================================================
+     CONTROLS
+     ======================================================= */
+
+  const keys = {
+
+    left: false,
+
+    right: false,
+
+    jump: false,
+
+    break: false
+
+  };
+
+
+  let jumpQueued = false;
+
+  let blocksBroken = 0;
+
+  let lastBreakTime = 0;
+
+
+  function setGameKey(key, value) {
+
+    keys[key] = value;
+
+
+    if (
+      key === "jump" &&
+      value === true
+    ) {
+
+      jumpQueued = true;
+
+    }
+
+  }
+
+
+  /* =======================================================
+     PC KEYBOARD
+     ======================================================= */
+
+  window.addEventListener(
+    "keydown",
+    event => {
+
+      const key =
+        event.key.toLowerCase();
+
+
+      if (
+        key === "a" ||
+        key === "arrowleft"
+      ) {
+
+        setGameKey(
+          "left",
+          true
+        );
+
+      }
+
+
+      if (
+        key === "d" ||
+        key === "arrowright"
+      ) {
+
+        setGameKey(
+          "right",
+          true
+        );
+
+      }
+
+
+      if (
+        key === "w" ||
+        key === "arrowup" ||
+        key === " "
+      ) {
+
+        event.preventDefault();
+
+        setGameKey(
+          "jump",
+          true
+        );
+
+      }
+
+
+      if (key === "e") {
+
+        setGameKey(
+          "break",
+          true
+        );
+
+      }
+
+    }
   );
 
-  function addTree(x){
-    for(let y=8;y<=10;y++) world[y][x]="wood";
-    for(let dx=-2;dx<=2;dx++) for(let dy=-2;dy<=0;dy++){
-      const xx=x+dx, yy=8+dy;
-      if(xx>=0 && xx<WORLD_W && yy>=0) world[yy][xx]="leaves";
+
+  /* =======================================================
+     PC KEYBOARD RELEASE
+     ======================================================= */
+
+  window.addEventListener(
+    "keyup",
+    event => {
+
+      const key =
+        event.key.toLowerCase();
+
+
+      if (
+        key === "a" ||
+        key === "arrowleft"
+      ) {
+
+        setGameKey(
+          "left",
+          false
+        );
+
+      }
+
+
+      if (
+        key === "d" ||
+        key === "arrowright"
+      ) {
+
+        setGameKey(
+          "right",
+          false
+        );
+
+      }
+
+
+      if (
+        key === "w" ||
+        key === "arrowup" ||
+        key === " "
+      ) {
+
+        setGameKey(
+          "jump",
+          false
+        );
+
+      }
+
+
+      if (key === "e") {
+
+        setGameKey(
+          "break",
+          false
+        );
+
+      }
+
     }
-  }
-  [10,25,45,70,95].forEach(addTree);
+  );
 
-  const p={x:300,y:100,w:28,h:38,vx:0,vy:0,grounded:false};
-  const keys={left:false,right:false,jump:false,break:false};
-  let jumpQueued=false, blocks=0, lastBreak=0;
 
-  function resize(){
-    const rect=canvas.getBoundingClientRect();
-    const w=Math.max(320,Math.floor(rect.width));
-    const h=Math.max(300,Math.min(500,Math.floor(w*.58)));
-    canvas.style.height=h+"px";
-    const dpr=Math.min(window.devicePixelRatio||1,2);
-    canvas.width=Math.floor(w*dpr);
-    canvas.height=Math.floor(h*dpr);
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-  }
-  resize();
-  addEventListener("resize",resize);
-  addEventListener("orientationchange",()=>setTimeout(resize,100));
+  /* =======================================================
+     MOBILE BUTTONS
+     ======================================================= */
 
-  function setKey(k,v){
-    keys[k]=v;
-    if(k==="jump" && v) jumpQueued=true;
-  }
-  addEventListener("keydown",e=>{
-    const k=e.key.toLowerCase();
-    if(k==="a"||k==="arrowleft") setKey("left",true);
-    if(k==="d"||k==="arrowright") setKey("right",true);
-    if(k==="w"||k==="arrowup"||k===" ") {e.preventDefault();setKey("jump",true);}
-    if(k==="e") setKey("break",true);
+  const mobileButtons =
+    document.querySelectorAll(
+      "[data-game-key]"
+    );
+
+
+  mobileButtons.forEach(button => {
+
+    const key =
+      button.dataset.gameKey;
+
+
+    function press(event) {
+
+      event.preventDefault();
+
+      setGameKey(
+        key,
+        true
+      );
+
+    }
+
+
+    function release(event) {
+
+      event.preventDefault();
+
+      setGameKey(
+        key,
+        false
+      );
+
+    }
+
+
+    button.addEventListener(
+      "pointerdown",
+      press
+    );
+
+
+    button.addEventListener(
+      "pointerup",
+      release
+    );
+
+
+    button.addEventListener(
+      "pointercancel",
+      release
+    );
+
+
+    button.addEventListener(
+      "pointerleave",
+      release
+    );
+
   });
-  addEventListener("keyup",e=>{
-    const k=e.key.toLowerCase();
-    if(k==="a"||k==="arrowleft") setKey("left",false);
-    if(k==="d"||k==="arrowright") setKey("right",false);
-    if(k==="w"||k==="arrowup"||k===" ") setKey("jump",false);
-    if(k==="e") setKey("break",false);
-  });
 
-  document.querySelectorAll("[data-game-key]").forEach(btn=>{
-    const k=btn.dataset.gameKey;
-    const down=e=>{e.preventDefault();setKey(k,true);};
-    const up=e=>{e.preventDefault();setKey(k,false);};
-    btn.addEventListener("pointerdown",down);
-    btn.addEventListener("pointerup",up);
-    btn.addEventListener("pointercancel",up);
-    btn.addEventListener("pointerleave",up);
-  });
 
-  function solid(tx,ty){
-    if(tx<0||tx>=WORLD_W||ty<0||ty>=WORLD_H) return true;
-    return !!world[ty][tx];
+  /* =======================================================
+     CANVAS RESIZE
+     ======================================================= */
+
+  function resizeCanvas() {
+
+    const rect =
+      canvas.getBoundingClientRect();
+
+
+    const width =
+      Math.max(
+        320,
+        Math.floor(rect.width)
+      );
+
+
+    const height =
+      Math.max(
+        300,
+        Math.min(
+          500,
+          Math.floor(width * 0.58)
+        )
+      );
+
+
+    canvas.style.height =
+      height + "px";
+
+
+    const devicePixelRatio =
+      Math.min(
+        window.devicePixelRatio || 1,
+        2
+      );
+
+
+    canvas.width =
+      Math.floor(
+        width * devicePixelRatio
+      );
+
+
+    canvas.height =
+      Math.floor(
+        height * devicePixelRatio
+      );
+
+
+    ctx.setTransform(
+      devicePixelRatio,
+      0,
+      0,
+      devicePixelRatio,
+      0,
+      0
+    );
+
   }
-  function collide(x,y){
-    const l=Math.floor(x/TILE), r=Math.floor((x+p.w-1)/TILE);
-    const t=Math.floor(y/TILE), b=Math.floor((y+p.h-1)/TILE);
-    return solid(l,t)||solid(r,t)||solid(l,b)||solid(r,b);
-  }
 
-  function breakAt(screenX,screenY){
-    const rect=canvas.getBoundingClientRect();
-    const cam=Math.max(0,Math.min(WORLD_W*TILE-rect.width,p.x-rect.width/2));
-    const tx=Math.floor((screenX+cam)/TILE), ty=Math.floor(screenY/TILE);
-    if(tx>=0&&tx<WORLD_W&&ty>=0&&ty<WORLD_H&&world[ty][tx]){
-      world[ty][tx]=null; blocks++;
-      const el=document.getElementById("gameBlocks");
-      if(el) el.textContent=blocks;
+
+  resizeCanvas();
+
+
+  window.addEventListener(
+    "resize",
+    resizeCanvas
+  );
+
+
+  window.addEventListener(
+    "orientationchange",
+    () => {
+
+      setTimeout(
+        resizeCanvas,
+        100
+      );
+
+    }
+  );
+
+
+  /* =======================================================
+     BLOCK COLLISION
+     ======================================================= */
+
+  function isSolid(
+    tileX,
+    tileY
+  ) {
+
+    if (
+      tileX < 0 ||
+      tileX >= WORLD_WIDTH ||
+      tileY < 0 ||
+      tileY >= WORLD_HEIGHT
+    ) {
+
       return true;
+
     }
+
+
+    return (
+      world[tileY][tileX] !== null
+    );
+
+  }
+
+
+  function playerCollides(
+    x,
+    y
+  ) {
+
+    const left =
+      Math.floor(
+        x / TILE
+      );
+
+
+    const right =
+      Math.floor(
+        (x + player.width - 1) /
+        TILE
+      );
+
+
+    const top =
+      Math.floor(
+        y / TILE
+      );
+
+
+    const bottom =
+      Math.floor(
+        (y + player.height - 1) /
+        TILE
+      );
+
+
+    return (
+
+      isSolid(left, top) ||
+
+      isSolid(right, top) ||
+
+      isSolid(left, bottom) ||
+
+      isSolid(right, bottom)
+
+    );
+
+  }
+
+
+  /* =======================================================
+     BREAK BLOCK WITH TOUCH / MOUSE
+     ======================================================= */
+
+  function breakBlockAt(
+    screenX,
+    screenY
+  ) {
+
+    const rect =
+      canvas.getBoundingClientRect();
+
+
+    const camera =
+      Math.max(
+        0,
+        Math.min(
+          WORLD_WIDTH * TILE -
+          rect.width,
+
+          player.x -
+          rect.width / 2
+        )
+      );
+
+
+    const tileX =
+      Math.floor(
+        (screenX + camera) /
+        TILE
+      );
+
+
+    const tileY =
+      Math.floor(
+        screenY /
+        TILE
+      );
+
+
+    if (
+
+      tileX >= 0 &&
+
+      tileX < WORLD_WIDTH &&
+
+      tileY >= 0 &&
+
+      tileY < WORLD_HEIGHT &&
+
+      world[tileY][tileX]
+
+    ) {
+
+      world[tileY][tileX] =
+        null;
+
+
+      blocksBroken++;
+
+
+      const counter =
+        document.getElementById(
+          "gameBlocks"
+        );
+
+
+      if (counter) {
+
+        counter.textContent =
+          blocksBroken;
+
+      }
+
+
+      return true;
+
+    }
+
+
     return false;
+
   }
 
-  canvas.addEventListener("pointerdown",e=>{
-    const r=canvas.getBoundingClientRect();
-    breakAt(e.clientX-r.left,e.clientY-r.top);
-  });
 
-  function breakFront(){
-    const now=performance.now();
-    if(now-lastBreak<180) return;
-    lastBreak=now;
-    const tx=Math.floor((p.x+(p.vx>=0?p.w+8:-8))/TILE);
-    const ty=Math.floor((p.y+p.h/2)/TILE);
-    if(tx>=0&&tx<WORLD_W&&ty>=0&&ty<WORLD_H&&world[ty][tx]){
-      world[ty][tx]=null; blocks++;
-      const el=document.getElementById("gameBlocks");
-      if(el) el.textContent=blocks;
+  /* =======================================================
+     MOUSE + TOUCH CANVAS
+     ======================================================= */
+
+  canvas.addEventListener(
+    "pointerdown",
+    event => {
+
+      event.preventDefault();
+
+
+      const rect =
+        canvas.getBoundingClientRect();
+
+
+      const x =
+        event.clientX -
+        rect.left;
+
+
+      const y =
+        event.clientY -
+        rect.top;
+
+
+      breakBlockAt(
+        x,
+        y
+      );
+
     }
-  }
+  );
 
-  function update(){
-    p.vx=keys.left?-4:keys.right?4:0;
-    if(jumpQueued&&p.grounded){p.vy=-11;p.grounded=false;}
-    jumpQueued=false;
-    p.vy=Math.min(p.vy+.55,14);
 
-    const nx=p.x+p.vx;
-    if(!collide(nx,p.y))p.x=nx;
+  /* =======================================================
+     BREAK BLOCK IN FRONT OF PLAYER
+     ======================================================= */
 
-    const ny=p.y+p.vy;
-    if(!collide(p.x,ny)){p.y=ny;p.grounded=false;}
-    else{
-      if(p.vy>0){p.y=Math.floor((p.y+p.h)/TILE)*TILE-p.h;p.grounded=true;}
-      p.vy=0;
-    }
-    p.x=Math.max(0,Math.min(WORLD_W*TILE-p.w,p.x));
-    if(keys.break){breakFront();keys.break=false;}
-  }
+  function breakBlockInFront() {
 
-  function draw(){
-    const w=canvas.clientWidth,h=canvas.clientHeight;
-    const g=ctx.createLinearGradient(0,0,0,h);
-    g.addColorStop(0,"#70c8ff");g.addColorStop(1,"#d8f4ff");
-    ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
-    const cam=Math.max(0,Math.min(WORLD_W*TILE-w,p.x-w/2));
+    const now =
+      performance.now();
 
-    for(let y=0;y<WORLD_H;y++) for(let x=0;x<WORLD_W;x++){
-      const type=world[y][x]; if(!type)continue;
-      const px=x*TILE-cam,py=y*TILE;
-      if(px<-TILE||px>w)continue;
-      ctx.fillStyle=type==="grass"||type==="dirt"?"#704525":
-                    type==="wood"?"#8b5a2b":"#278b3d";
-      ctx.fillRect(px,py,TILE,TILE);
-      if(type==="grass"){ctx.fillStyle="#45a049";ctx.fillRect(px,py,TILE,8);}
-      ctx.strokeStyle="rgba(0,0,0,.12)";ctx.strokeRect(px,py,TILE,TILE);
+
+    if (
+      now - lastBreakTime <
+      180
+    ) {
+
+      return;
+
     }
 
-    const px=p.x-cam;
-    ctx.fillStyle="#35a853";ctx.fillRect(px,p.y,p.w,p.h);
-    ctx.fillStyle="#f2c29b";ctx.fillRect(px+4,p.y+4,20,18);
-    ctx.fillStyle="#111";ctx.fillRect(px+8,p.y+10,4,4);ctx.fillRect(px+17,p.y+10,4,4);
+
+    lastBreakTime =
+      now;
+
+
+    const direction =
+      player.velocityX >= 0
+        ? 1
+        : -1;
+
+
+    const tileX =
+      Math.floor(
+        (
+          player.x +
+          (
+            direction > 0
+              ? player.width + 8
+              : -8
+          )
+        ) / TILE
+      );
+
+
+    const tileY =
+      Math.floor(
+        (
+          player.y +
+          player.height / 2
+        ) / TILE
+      );
+
+
+    if (
+
+      tileX >= 0 &&
+
+      tileX < WORLD_WIDTH &&
+
+      tileY >= 0 &&
+
+      tileY < WORLD_HEIGHT &&
+
+      world[tileY][tileX]
+
+    ) {
+
+      world[tileY][tileX] =
+        null;
+
+
+      blocksBroken++;
+
+
+      const counter =
+        document.getElementById(
+          "gameBlocks"
+        );
+
+
+      if (counter) {
+
+        counter.textContent =
+          blocksBroken;
+
+      }
+
+    }
+
   }
 
-  function loop(){update();draw();requestAnimationFrame(loop);}
-  loop();
+
+  /* =======================================================
+     GAME UPDATE
+     ======================================================= */
+
+  function updateGame() {
+
+    /*
+       Movement
+    */
+
+    if (keys.left) {
+
+      player.velocityX = -4;
+
+    } else if (keys.right) {
+
+      player.velocityX = 4;
+
+    } else {
+
+      player.velocityX = 0;
+
+    }
+
+
+    /*
+       Jump
+    */
+
+    if (
+      jumpQueued &&
+      player.grounded
+    ) {
+
+      player.velocityY =
+        -11;
+
+
+      player.grounded =
+        false;
+
+    }
+
+
+    jumpQueued = false;
+
+
+    /*
+       Gravity
+    */
+
+    player.velocityY += 0.55;
+
+
+    if (
+      player.velocityY > 14
+    ) {
+
+      player.velocityY =
+        14;
+
+    }
+
+
+    /*
+       Horizontal collision
+    */
+
+    const newX =
+      player.x +
+      player.velocityX;
+
+
+    if (
+      !playerCollides(
+        newX,
+        player.y
+      )
+    ) {
+
+      player.x =
+        newX;
+
+    }
+
+
+    /*
+       Vertical collision
+    */
+
+    const newY =
+      player.y +
+      player.velocityY;
+
+
+    if (
+      !playerCollides(
+        player.x,
+        newY
+      )
+    ) {
+
+      player.y =
+        newY;
+
+
+      player.grounded =
+        false;
+
+    } else {
+
+      if (
+        player.velocityY > 0
+      ) {
+
+        player.y =
+          Math.floor(
+            (
+              player.y +
+              player.height
+            ) / TILE
+          ) * TILE -
+          player.height;
+
+
+        player.grounded =
+          true;
+
+      }
+
+
+      player.velocityY =
+        0;
+
+    }
+
+
+    /*
+       World boundaries
+    */
+
+    player.x =
+      Math.max(
+        0,
+
+        Math.min(
+          WORLD_WIDTH * TILE -
+          player.width,
+
+          player.x
+        )
+      );
+
+
+    /*
+       Break button
+    */
+
+    if (keys.break) {
+
+      breakBlockInFront();
+
+      keys.break =
+        false;
+
+    }
+
+  }
+
+
+  /* =======================================================
+     DRAW BLOCKS
+     ======================================================= */
+
+  function drawBlock(
+    type,
+    x,
+    y,
+    camera
+  ) {
+
+    const screenX =
+      x * TILE -
+      camera;
+
+
+    const screenY =
+      y * TILE;
+
+
+    if (
+      screenX < -TILE ||
+      screenX > canvas.clientWidth
+    ) {
+
+      return;
+
+    }
+
+
+    if (
+      type === "grass"
+    ) {
+
+      ctx.fillStyle =
+        "#704525";
+
+      ctx.fillRect(
+        screenX,
+        screenY,
+        TILE,
+        TILE
+      );
+
+
+      ctx.fillStyle =
+        "#45a049";
+
+      ctx.fillRect(
+        screenX,
+        screenY,
+        TILE,
+        8
+      );
+
+    }
+
+
+    else if (
+      type === "dirt"
+    ) {
+
+      ctx.fillStyle =
+        "#704525";
+
+      ctx.fillRect(
+        screenX,
+        screenY,
+        TILE,
+        TILE
+      );
+
+    }
+
+
+    else if (
+      type === "wood"
+    ) {
+
+      ctx.fillStyle =
+        "#8b5a2b";
+
+      ctx.fillRect(
+        screenX,
+        screenY,
+        TILE,
+        TILE
+      );
+
+
+      ctx.fillStyle =
+        "#5c3518";
+
+      ctx.fillRect(
+        screenX + 15,
+        screenY,
+        8,
+        TILE
+      );
+
+    }
+
+
+    else if (
+      type === "leaves"
+    ) {
+
+      ctx.fillStyle =
+        "#278b3d";
+
+      ctx.fillRect(
+        screenX,
+        screenY,
+        TILE,
+        TILE
+      );
+
+    }
+
+
+    /*
+       Block border
+    */
+
+    ctx.strokeStyle =
+      "rgba(0,0,0,0.12)";
+
+
+    ctx.strokeRect(
+      screenX,
+      screenY,
+      TILE,
+      TILE
+    );
+
+  }
+
+
+  /* =======================================================
+     DRAW GAME
+     ======================================================= */
+
+  function drawGame() {
+
+    const width =
+      canvas.clientWidth;
+
+
+    const height =
+      canvas.clientHeight;
+
+
+    /*
+       Sky
+    */
+
+    const sky =
+      ctx.createLinearGradient(
+        0,
+        0,
+        0,
+        height
+      );
+
+
+    sky.addColorStop(
+      0,
+      "#70c8ff"
+    );
+
+
+    sky.addColorStop(
+      1,
+      "#d8f4ff"
+    );
+
+
+    ctx.fillStyle =
+      sky;
+
+
+    ctx.fillRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    /*
+       Camera
+    */
+
+    const camera =
+      Math.max(
+        0,
+
+        Math.min(
+          WORLD_WIDTH * TILE -
+          width,
+
+          player.x -
+          width / 2
+        )
+      );
+
+
+    /*
+       Draw world
+    */
+
+    for (
+      let y = 0;
+      y < WORLD_HEIGHT;
+      y++
+    ) {
+
+      for (
+        let x = 0;
+        x < WORLD_WIDTH;
+        x++
+      ) {
+
+        const block =
+          world[y][x];
+
+
+        if (block) {
+
+          drawBlock(
+            block,
+            x,
+            y,
+            camera
+          );
+
+        }
+
+      }
+
+    }
+
+
+    /*
+       Player
+    */
+
+    const playerX =
+      player.x -
+      camera;
+
+
+    ctx.fillStyle =
+      "#35a853";
+
+
+    ctx.fillRect(
+      playerX,
+      player.y,
+      player.width,
+      player.height
+    );
+
+
+    /*
+       Player face
+    */
+
+    ctx.fillStyle =
+      "#f2c29b";
+
+
+    ctx.fillRect(
+      playerX + 4,
+      player.y + 4,
+      20,
+      18
+    );
+
+
+    /*
+       Eyes
+    */
+
+    ctx.fillStyle =
+      "#111";
+
+
+    ctx.fillRect(
+      playerX + 8,
+      player.y + 10,
+      4,
+      4
+    );
+
+
+    ctx.fillRect(
+      playerX + 17,
+      player.y + 10,
+      4,
+      4
+    );
+
+  }
+
+
+  /* =======================================================
+     GAME LOOP
+     ======================================================= */
+
+  function gameLoop() {
+
+    updateGame();
+
+    drawGame();
+
+    requestAnimationFrame(
+      gameLoop
+    );
+
+  }
+
+
+  gameLoop();
+
 });
