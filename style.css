@@ -2,43 +2,67 @@
    BEDROCKPACKS - COMPLETE STYLE.CSS
    ========================================================= */
 
-/* RESET */
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-    background:#0f1117;
-    color:#fff;
-    overflow-x:hidden;
-}
-
-a{
-    text-decoration:none;
-    color:white;
-}
-
-button{
-    cursor:pointer;
-    border:none;
-}
 
 /* =========================================================
-   CAPTCHA - COMPLETE CSS
+   RESET
    ========================================================= */
 
-/* Full-screen CAPTCHA */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #0f1117;
+
+    color: #ffffff;
+
+    overflow-x: hidden;
+}
+
+button,
+input,
+textarea,
+select {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* =========================================================
+   CAPTCHA SCREEN
+   ========================================================= */
+
 #captchaScreen {
     position: fixed;
+
     inset: 0;
 
     width: 100%;
     height: 100%;
 
     display: flex;
+
     justify-content: center;
     align-items: center;
 
@@ -55,9 +79,12 @@ button{
     z-index: 99999;
 }
 
-/* CAPTCHA box */
+
+/* CAPTCHA BOX */
+
 #captchaScreen .auth-box {
     width: 420px;
+
     max-width: 100%;
 
     padding: 30px;
@@ -74,7 +101,9 @@ button{
         0 20px 60px rgba(0, 0, 0, 0.6);
 }
 
-/* CAPTCHA title */
+
+/* CAPTCHA TITLE */
+
 #captchaScreen .auth-box h2 {
     margin: 0 0 10px;
 
@@ -83,7 +112,9 @@ button{
     font-size: 28px;
 }
 
-/* CAPTCHA description */
+
+/* CAPTCHA TEXT */
+
 #captchaScreen .auth-box p {
     margin: 10px 0;
 
@@ -94,9 +125,12 @@ button{
     line-height: 1.5;
 }
 
-/* CAPTCHA grid */
+
+/* CAPTCHA GRID */
+
 #captchaGrid {
     width: 100%;
+
     max-width: 320px;
 
     margin: 25px auto;
@@ -109,7 +143,9 @@ button{
     gap: 10px;
 }
 
-/* CAPTCHA blocks */
+
+/* CAPTCHA BLOCK */
+
 .captcha-block {
     width: 100%;
 
@@ -132,7 +168,9 @@ button{
         box-shadow 0.15s ease;
 }
 
-/* Hover */
+
+/* CAPTCHA HOVER */
+
 .captcha-block:hover {
     background: #3b4452;
 
@@ -141,12 +179,16 @@ button{
     transform: scale(1.04);
 }
 
-/* Click */
+
+/* CAPTCHA CLICK */
+
 .captcha-block:active {
     transform: scale(0.94);
 }
 
-/* Correct block */
+
+/* CORRECT BLOCK */
+
 .captcha-block.correct {
     background: #57d163;
 
@@ -156,12 +198,16 @@ button{
         0 0 20px rgba(87, 209, 99, 0.35);
 }
 
-/* Correct block hover */
+
+/* CORRECT BLOCK HOVER */
+
 .captcha-block.correct:hover {
     background: #65dc70;
 }
 
-/* CAPTCHA message */
+
+/* CAPTCHA MESSAGE */
+
 #captchaMessage {
     min-height: 24px;
 
@@ -174,25 +220,941 @@ button{
     font-weight: bold;
 }
 
-/* Success message */
-#captchaMessage.success {
+
+/* =========================================================
+   LOGIN SCREEN
+   ========================================================= */
+
+#loginScreen {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0b0f14,
+            #151c26,
+            #0b0f14
+        );
+
+    z-index: 99998;
+}
+
+
+/* LOGIN BOX */
+
+#loginScreen .auth-box {
+    width: 420px;
+
+    max-width: 100%;
+
+    padding: 30px;
+
+    background: #181c25;
+
+    border: 1px solid #303744;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+
+/* LOGIN TITLE */
+
+#loginScreen .auth-box h2 {
+    margin-bottom: 10px;
+
+    color: #57d163;
+
+    font-size: 30px;
+}
+
+
+/* LOGIN DESCRIPTION */
+
+#loginScreen .auth-box p {
+    color: #aeb5c2;
+
+    line-height: 1.5;
+}
+
+
+/* LOGIN INPUTS */
+
+#loginScreen input {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 12px;
+
+    border: 1px solid #394150;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #11151c;
+
+    color: white;
+
+    font-size: 15px;
+
+    transition: border-color 0.2s;
+}
+
+
+#loginScreen input:focus {
+    border-color: #57d163;
+
+    box-shadow:
+        0 0 0 3px rgba(87, 209, 99, 0.1);
+}
+
+
+/* LOGIN BUTTONS */
+
+#loginScreen button {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 12px;
+
+    border-radius: 10px;
+
+    background: #57d163;
+
+    color: #071009;
+
+    font-weight: bold;
+
+    transition:
+        transform 0.15s,
+        filter 0.15s;
+}
+
+
+#loginScreen button:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.08);
+}
+
+
+/* SECONDARY BUTTON */
+
+#loginScreen button.secondary {
+    background: #303744;
+
+    color: white;
+}
+
+
+/* LOGIN MESSAGE */
+
+#loginMessage {
+    min-height: 24px;
+
+    margin-top: 15px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   WEBSITE HEADER
+   ========================================================= */
+
+header {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 500;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 16px 6%;
+
+    background:
+        rgba(15, 17, 23, 0.95);
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    backdrop-filter: blur(12px);
+}
+
+
+/* LOGO */
+
+.logo {
+    color: #57d163;
+
+    font-size: 26px;
+
+    font-weight: 900;
+
+    white-space: nowrap;
+}
+
+
+/* NAVIGATION */
+
+nav {
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+}
+
+
+nav a {
+    color: #c8ced8;
+
+    font-size: 15px;
+
+    transition: color 0.2s;
+}
+
+
+nav a:hover {
     color: #57d163;
 }
 
-/* Error message */
-#captchaMessage.error {
-    color: #ff5c5c;
-}
 
 /* =========================================================
-   MOBILE CAPTCHA
+   HERO
+   ========================================================= */
+
+.hero {
+    min-height: 500px;
+
+    padding:
+        90px 6%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #1d3525,
+            #111820 50%,
+            #0f1117
+        );
+}
+
+
+.hero h1 {
+    margin-bottom: 18px;
+
+    font-size:
+        clamp(40px, 7vw, 72px);
+
+    font-weight: 900;
+
+    color: #ffffff;
+}
+
+
+.hero p {
+    max-width: 700px;
+
+    color: #aeb5c2;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.search {
+    width: 100%;
+
+    max-width: 700px;
+
+    margin-top: 30px;
+
+    display: flex;
+
+    gap: 10px;
+}
+
+
+.search input {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 15px 18px;
+
+    border: 1px solid #343b49;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #171b24;
+
+    color: white;
+
+    font-size: 16px;
+}
+
+
+.search input:focus {
+    border-color: #57d163;
+
+    box-shadow:
+        0 0 0 3px rgba(87, 209, 99, 0.1);
+}
+
+
+.search button {
+    padding:
+        15px 24px;
+
+    border-radius: 10px;
+
+    background: #57d163;
+
+    color: #071009;
+
+    font-weight: bold;
+}
+
+
+.search button:hover {
+    filter: brightness(1.08);
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+section {
+    width: 100%;
+
+    padding: 70px 6%;
+}
+
+
+.title {
+    margin-bottom: 40px;
+
+    text-align: center;
+
+    font-size: 36px;
+}
+
+
+/* =========================================================
+   PACK CARDS
+   ========================================================= */
+
+.cards {
+    max-width: 1200px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(250px, 1fr)
+        );
+
+    gap: 25px;
+}
+
+
+.card {
+    overflow: hidden;
+
+    background: #181c25;
+
+    border:
+        1px solid #2c313c;
+
+    border-radius: 16px;
+
+    transition:
+        transform 0.25s,
+        border-color 0.25s,
+        box-shadow 0.25s;
+}
+
+
+.card:hover {
+    transform: translateY(-6px);
+
+    border-color: #57d163;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+
+.card-content {
+    padding: 22px;
+}
+
+
+.card h3 {
+    margin-bottom: 10px;
+
+    font-size: 21px;
+}
+
+
+.card p {
+    color: #aeb5c2;
+
+    line-height: 1.6;
+}
+
+
+.card button {
+    width: 100%;
+
+    padding: 13px;
+
+    margin-top: 18px;
+
+    border-radius: 10px;
+
+    background: #57d163;
+
+    color: #071009;
+
+    font-weight: bold;
+
+    transition: filter 0.2s;
+}
+
+
+.card button:hover {
+    filter: brightness(1.08);
+}
+
+
+/* =========================================================
+   GAME
+   ========================================================= */
+
+.game-section {
+    background: #10141b;
+}
+
+
+.game-container {
+    position: relative;
+
+    width: 100%;
+
+    max-width: 1000px;
+
+    margin: auto;
+
+    overflow: hidden;
+
+    background: #70c8ff;
+
+    border:
+        1px solid #303744;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+
+#gameCanvas {
+    display: block;
+
+    width: 100%;
+
+    height: 500px;
+
+    touch-action: none;
+
+    user-select: none;
+
+    -webkit-user-select: none;
+}
+
+
+/* GAME HUD */
+
+.game-hud {
+    position: absolute;
+
+    top: 15px;
+
+    left: 15px;
+
+    z-index: 20;
+
+    padding: 9px 14px;
+
+    background:
+        rgba(0, 0, 0, 0.55);
+
+    border-radius: 8px;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    pointer-events: none;
+}
+
+
+/* GAME HELP */
+
+.game-help {
+    position: absolute;
+
+    left: 15px;
+
+    bottom: 15px;
+
+    z-index: 20;
+
+    max-width: 450px;
+
+    padding: 9px 14px;
+
+    background:
+        rgba(0, 0, 0, 0.55);
+
+    border-radius: 8px;
+
+    color: white;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   MOBILE GAME CONTROLS
+   ========================================================= */
+
+#mobileControls {
+    display: none;
+
+    position: absolute;
+
+    left: 12px;
+
+    right: 12px;
+
+    bottom: 12px;
+
+    z-index: 30;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    pointer-events: none;
+}
+
+
+.mc-left,
+.mc-right {
+    display: flex;
+
+    gap: 10px;
+
+    pointer-events: auto;
+}
+
+
+#mobileControls button {
+    width: 58px;
+
+    height: 58px;
+
+    padding: 0;
+
+    border:
+        2px solid
+        rgba(255, 255, 255, 0.6);
+
+    border-radius: 50%;
+
+    background:
+        rgba(20, 25, 30, 0.8);
+
+    color: white;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    touch-action: none;
+
+    user-select: none;
+
+    -webkit-user-select: none;
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+    transition:
+        transform 0.1s,
+        background 0.1s;
+}
+
+
+#mobileControls button:active {
+    transform: scale(0.9);
+
+    background:
+        rgba(87, 209, 99, 0.85);
+}
+
+
+/* =========================================================
+   FEEDBACK
+   ========================================================= */
+
+.feedback-section {
+    background: #0d1117;
+
+    text-align: center;
+}
+
+
+.feedback-subtitle {
+    margin-top: -25px;
+
+    margin-bottom: 30px;
+
+    color: #aeb5c2;
+}
+
+
+#feedbackForm {
+    width: 100%;
+
+    max-width: 650px;
+
+    margin: auto;
+
+    display: grid;
+
+    gap: 13px;
+}
+
+
+#feedbackForm input,
+#feedbackForm textarea,
+#feedbackForm select {
+    width: 100%;
+
+    padding: 14px;
+
+    border:
+        1px solid #343b49;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #171b24;
+
+    color: white;
+
+    font-size: 15px;
+}
+
+
+#feedbackForm input:focus,
+#feedbackForm textarea:focus,
+#feedbackForm select:focus {
+    border-color: #57d163;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(87, 209, 99, 0.1);
+}
+
+
+#feedbackForm textarea {
+    min-height: 140px;
+
+    resize: vertical;
+}
+
+
+#feedbackForm button {
+    padding: 15px;
+
+    border-radius: 10px;
+
+    background: #57d163;
+
+    color: #071009;
+
+    font-weight: bold;
+
+    transition:
+        transform 0.15s,
+        filter 0.15s;
+}
+
+
+#feedbackForm button:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.08);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    padding: 35px 20px;
+
+    text-align: center;
+
+    color: #7f8794;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+}
+
+
+footer p + p {
+    margin-top: 7px;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   TABLETS
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    header {
+        padding: 14px 4%;
+    }
+
+
+    nav {
+        gap: 12px;
+    }
+
+
+    nav a {
+        font-size: 14px;
+    }
+
+
+    .hero {
+        min-height: 450px;
+
+        padding: 70px 5%;
+    }
+
+
+    section {
+        padding:
+            55px 5%;
+    }
+
+
+    #mobileControls {
+        display: flex;
+    }
+
+
+    #gameCanvas {
+        height: 58vw;
+
+        min-height: 300px;
+
+        max-height: 500px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
    ========================================================= */
 
 @media (max-width: 600px) {
 
+    body {
+        width: 100%;
+
+        overflow-x: hidden;
+    }
+
+
+    header {
+        flex-direction: column;
+
+        gap: 12px;
+
+        padding: 14px;
+    }
+
+
+    .logo {
+        font-size: 23px;
+    }
+
+
+    nav {
+        width: 100%;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        gap: 15px;
+    }
+
+
+    nav a {
+        font-size: 13px;
+    }
+
+
+    .hero {
+        min-height: 420px;
+
+        padding:
+            60px 18px;
+    }
+
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+
+    .hero p {
+        font-size: 15px;
+    }
+
+
+    .search {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+
+    .search input,
+    .search button {
+        width: 100%;
+    }
+
+
+    section {
+        padding:
+            45px 4%;
+    }
+
+
+    .title {
+        font-size: 29px;
+
+        margin-bottom: 30px;
+    }
+
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+
+    #mobileControls button {
+        width: 54px;
+
+        height: 54px;
+
+        font-size: 20px;
+    }
+
+
+    .game-help {
+        display: none;
+    }
+
+
+    #feedbackForm {
+        width: 100%;
+    }
+
+
+    #feedbackForm input,
+    #feedbackForm textarea,
+    #feedbackForm select {
+        font-size: 16px;
+    }
+
+
+    /* CAPTCHA */
+
     #captchaScreen {
         padding: 15px;
     }
+
 
     #captchaScreen .auth-box {
         width: 100%;
@@ -202,13 +1164,11 @@ button{
         border-radius: 16px;
     }
 
+
     #captchaScreen .auth-box h2 {
         font-size: 24px;
     }
 
-    #captchaScreen .auth-box p {
-        font-size: 14px;
-    }
 
     #captchaGrid {
         max-width: 290px;
@@ -216,12 +1176,29 @@ button{
         gap: 8px;
     }
 
+
     .captcha-block {
         border-radius: 10px;
-
-        border-width: 2px;
     }
+
+
+    /* LOGIN */
+
+    #loginScreen {
+        padding: 15px;
+    }
+
+
+    #loginScreen .auth-box {
+        width: 100%;
+
+        padding: 22px;
+
+        border-radius: 16px;
+    }
+
 }
+
 
 /* =========================================================
    SMALL PHONES
@@ -229,26 +1206,75 @@ button{
 
 @media (max-width: 380px) {
 
-    #captchaScreen {
-        padding: 10px;
-    }
-
-    #captchaScreen .auth-box {
+    #captchaScreen .auth-box,
+    #loginScreen .auth-box {
         padding: 18px;
     }
 
-    #captchaScreen .auth-box h2 {
-        font-size: 21px;
+
+    #captchaScreen .auth-box h2,
+    #loginScreen .auth-box h2 {
+        font-size: 22px;
     }
+
 
     #captchaGrid {
         gap: 7px;
     }
 
+
     .captcha-block {
         border-radius: 8px;
     }
+
+
+    #mobileControls {
+        left: 8px;
+
+        right: 8px;
+
+        bottom: 8px;
+    }
+
+
+    #mobileControls button {
+        width: 48px;
+
+        height: 48px;
+
+        font-size: 18px;
+    }
+
 }
+
+
+/* =========================================================
+   LANDSCAPE MOBILE
+   ========================================================= */
+
+@media (
+    max-height: 500px
+) and (
+    orientation: landscape
+) {
+
+    #gameCanvas {
+        height: 80vh;
+
+        min-height: 280px;
+    }
+
+
+    #mobileControls button {
+        width: 48px;
+
+        height: 48px;
+
+        font-size: 18px;
+    }
+
+}
+
 
 /* =========================================================
    TOUCH DEVICES
@@ -257,337 +1283,23 @@ button{
 @media (pointer: coarse) {
 
     .captcha-block {
-        min-width: 60px;
-        min-height: 60px;
+        min-width: 55px;
+
+        min-height: 55px;
     }
 
-    .captcha-block:active {
-        transform: scale(0.92);
-    }
-}
-/* ================= HEADER ================= */
 
-header{
-    position:sticky;
-    top:0;
-    background:#11151c;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:18px 6%;
-    border-bottom:1px solid #222;
-    z-index:100;
-}
-
-.logo{
-    font-size:28px;
-    font-weight:800;
-    color:#57d163;
-}
-
-nav{
-    display:flex;
-    gap:22px;
-}
-
-nav a{
-    color:#ddd;
-    transition:.2s;
-}
-
-nav a:hover{
-    color:#57d163;
-}
-
-/* ================= HERO ================= */
-
-.hero{
-    padding:90px 6%;
-    text-align:center;
-    background:linear-gradient(135deg,#111820,#17251b);
-}
-
-.hero h1{
-    font-size:55px;
-    margin-bottom:18px;
-}
-
-.hero p{
-    color:#bbb;
-    font-size:18px;
-}
-
-.search{
-    max-width:650px;
-    margin:30px auto;
-    display:flex;
-    gap:10px;
-}
-
-.search input{
-    flex:1;
-    padding:15px;
-    border-radius:10px;
-    border:none;
-    background:#1b2028;
-    color:white;
-}
-
-.search button{
-    padding:15px 24px;
-    border-radius:10px;
-    background:#57d163;
-    font-weight:bold;
-}
-
-/* ================= DOWNLOADS ================= */
-
-section{
-    padding:70px 6%;
-}
-
-.title{
-    text-align:center;
-    font-size:34px;
-    margin-bottom:40px;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:25px;
-}
-
-.card{
-    background:#181c25;
-    border-radius:16px;
-    overflow:hidden;
-    border:1px solid #2c313c;
-    transition:.25s;
-}
-
-.card:hover{
-    transform:translateY(-6px);
-    border-color:#57d163;
-}
-
-.card img{
-    width:100%;
-    height:180px;
-    object-fit:cover;
-}
-
-.card-content{
-    padding:20px;
-}
-
-.card h3{
-    margin-bottom:10px;
-}
-
-.card p{
-    color:#bbb;
-    line-height:1.5;
-}
-
-.card button{
-    width:100%;
-    margin-top:16px;
-    padding:12px;
-    border-radius:10px;
-    background:#57d163;
-    color:#111;
-    font-weight:bold;
-}
-
-/* ================= FEATURES ================= */
-
-.feature-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:22px;
-}
-
-.feature{
-    background:#181c25;
-    border-radius:16px;
-    padding:22px;
-    text-align:center;
-    border:1px solid #2c313c;
-}
-
-.feature h3{
-    margin-bottom:10px;
-}
-
-/* ================= FEEDBACK ================= */
-
-.feedback-section{
-    background:#10161d;
-    text-align:center;
-}
-
-.feedback-subtitle{
-    color:#bbb;
-    margin-bottom:25px;
-}
-
-#feedbackForm{
-    max-width:650px;
-    margin:auto;
-    display:grid;
-    gap:12px;
-}
-
-#feedbackForm input,
-#feedbackForm textarea,
-#feedbackForm select{
-    padding:14px;
-    border-radius:10px;
-    border:1px solid #333;
-    background:#1b2028;
-    color:white;
-}
-
-#feedbackForm textarea{
-    min-height:140px;
-}
-
-#feedbackForm button{
-    padding:15px;
-    border-radius:10px;
-    background:#57d163;
-    color:#111;
-    font-weight:bold;
-}
-
-/* ================= GAME ================= */
-
-.game-container{
-    position:relative;
-    max-width:1000px;
-    margin:auto;
-    background:#111;
-    border-radius:16px;
-    overflow:hidden;
-}
-
-#gameCanvas{
-    display:block;
-    width:100%;
-    height:500px;
-    background:#70c8ff;
-    touch-action:none;
-}
-
-.game-hud{
-    position:absolute;
-    top:15px;
-    left:15px;
-    background:rgba(0,0,0,.55);
-    padding:8px 14px;
-    border-radius:8px;
-    font-weight:bold;
-}
-
-.game-help{
-    position:absolute;
-    bottom:15px;
-    left:15px;
-    background:rgba(0,0,0,.55);
-    padding:8px 14px;
-    border-radius:8px;
-    font-size:14px;
-}
-
-/* Mobile controls */
-
-#mobileControls{
-    display:none;
-    position:absolute;
-    left:12px;
-    right:12px;
-    bottom:12px;
-    justify-content:space-between;
-    align-items:end;
-    pointer-events:none;
-}
-
-.mc-left,
-.mc-right{
-    display:flex;
-    gap:10px;
-    pointer-events:auto;
-}
-
-#mobileControls button{
-    width:58px;
-    height:58px;
-    border-radius:50%;
-    border:2px solid rgba(255,255,255,.6);
-    background:rgba(20,25,30,.78);
-    color:white;
-    font-size:23px;
-    font-weight:bold;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-    padding:30px;
-    text-align:center;
-    color:#888;
-    border-top:1px solid #222;
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media(max-width:800px){
-
-    nav{
-        display:none;
+    #mobileControls {
+        display: flex;
     }
 
-    .hero h1{
-        font-size:40px;
+
+    #mobileControls button {
+        -webkit-touch-callout: none;
+
+        user-select: none;
+
+        -webkit-user-select: none;
     }
 
-    .search{
-        flex-direction:column;
-    }
-
-    #mobileControls{
-        display:flex;
-    }
-
-    #gameCanvas{
-        height:58vw;
-        min-height:300px;
-        max-height:500px;
-    }
-}
-
-@media(max-width:500px){
-
-    .hero{
-        padding:60px 20px;
-    }
-
-    .hero h1{
-        font-size:32px;
-    }
-
-    .title{
-        font-size:28px;
-    }
-
-    #mobileControls button{
-        width:52px;
-        height:52px;
-        font-size:20px;
-    }
-
-    .game-hud{
-        font-size:12px;
-    }
 }
