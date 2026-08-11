@@ -1,7 +1,83 @@
-document.addEventListener("DOMContentLoaded",function(){
-const captchaScreen=document.getElementById("captchaScreen"),blocks=document.querySelectorAll(".captcha-block"),msg=document.getElementById("captchaMessage");let correct=0;
-function newCaptcha(){correct=Math.floor(Math.random()*blocks.length);blocks.forEach(b=>b.classList.remove("correct"));blocks[correct].classList.add("correct");msg.textContent="Click the green block";msg.style.color="#aeb5c2"}
-blocks.forEach((b,i)=>b.addEventListener("click",()=>{if(i===correct){msg.textContent="✓ Verification successful!";msg.style.color="#57d163";setTimeout(()=>{captchaScreen.style.display="none";document.getElementById("loginScreen").style.display="flex"},500)}else{msg.textContent="✕ Wrong block! Try again.";msg.style.color="#ff5555";setTimeout(newCaptcha,600)}}));newCaptcha();
+// ===============================
+// CAPTCHA
+// ===============================
+
+const captchaScreen = document.getElementById("captchaScreen");
+const captchaBlocks = document.querySelectorAll(".captcha-block");
+const captchaMessage = document.getElementById("captchaMessage");
+
+let correctBlock = -1;
+
+function createCaptcha() {
+    if (captchaBlocks.length === 0) {
+        console.error("No CAPTCHA blocks found.");
+        return;
+    }
+
+    // Remove the green color from every block
+    captchaBlocks.forEach(function (block) {
+        block.classList.remove("correct");
+    });
+
+    // Choose a random correct block
+    correctBlock = Math.floor(
+        Math.random() * captchaBlocks.length
+    );
+
+    captchaMessage.textContent = "Click the green block";
+    captchaMessage.style.color = "#aeb5c2";
+}
+
+captchaBlocks.forEach(function (block, index) {
+
+    block.addEventListener("click", function () {
+
+        if (index === correctBlock) {
+
+            // Show success
+            block.classList.add("correct");
+
+            captchaMessage.textContent =
+                "✓ CAPTCHA passed!";
+
+            captchaMessage.style.color =
+                "#57d163";
+
+            // Hide CAPTCHA
+            setTimeout(function () {
+
+                captchaScreen.style.display = "none";
+
+                // Show login
+                const loginScreen =
+                    document.getElementById("loginScreen");
+
+                if (loginScreen) {
+                    loginScreen.style.display = "flex";
+                }
+
+            }, 600);
+
+        } else {
+
+            // Wrong block
+            captchaMessage.textContent =
+                "✕ Wrong block! Try again.";
+
+            captchaMessage.style.color =
+                "#ff5555";
+
+            setTimeout(function () {
+                createCaptcha();
+            }, 700);
+        }
+
+    });
+
+});
+
+// Start CAPTCHA
+createCaptcha();
 
 const loginScreen=document.getElementById("loginScreen"),user=document.getElementById("username"),pass=document.getElementById("password"),loginBtn=document.getElementById("loginButton"),createBtn=document.getElementById("createButton"),loginMsg=document.getElementById("loginMessage");
 let accounts={};try{accounts=JSON.parse(localStorage.getItem("bedrockAccounts")||"{}")}catch(e){}
