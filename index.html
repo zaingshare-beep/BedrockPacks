@@ -224,55 +224,74 @@ Carefully selected content.
 
 </section>
 
-<section id="feedback" class="feedback-section">
+<form
+    id="feedbackForm"
+    action="https://formsubmit.co/zain.gshare@gmail.com"
+    method="POST"
+>
 
-    <h2 class="title">Send Us Feedback</h2>
+    <input
+        type="text"
+        name="name"
+        id="feedbackName"
+        placeholder="Your name"
+        required
+    >
 
-    <p class="feedback-subtitle">
-        Tell us what you think about BedrockPacks.
-    </p>
+    <input
+        type="email"
+        name="email"
+        id="feedbackEmail"
+        placeholder="Your email"
+        required
+    >
 
-    <form id="feedbackForm">
+    <select
+        name="rating"
+        id="feedbackRating"
+        required
+    >
+        <option value="">Rate our website</option>
+        <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+        <option value="4">⭐⭐⭐⭐ Very Good</option>
+        <option value="3">⭐⭐⭐ Good</option>
+        <option value="2">⭐⭐ Needs Improvement</option>
+        <option value="1">⭐ Poor</option>
+    </select>
 
-        <input
-            type="text"
-            id="feedbackName"
-            placeholder="Your name"
-            required
-        >
+    <textarea
+        name="message"
+        id="feedbackMessage"
+        placeholder="Write your feedback..."
+        rows="6"
+        required
+    ></textarea>
 
-        <input
-            type="email"
-            id="feedbackEmail"
-            placeholder="Your email"
-            required
-        >
+    <input
+        type="hidden"
+        name="_subject"
+        value="New BedrockPacks Feedback"
+    >
 
-        <select id="feedbackRating" required>
-            <option value="">Rate our website</option>
-            <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
-            <option value="4">⭐⭐⭐⭐ Very Good</option>
-            <option value="3">⭐⭐⭐ Good</option>
-            <option value="2">⭐⭐ Needs Improvement</option>
-            <option value="1">⭐ Poor</option>
-        </select>
+    <input
+        type="hidden"
+        name="_template"
+        value="table"
+    >
 
-        <textarea
-            id="feedbackMessage"
-            placeholder="Write your feedback..."
-            rows="6"
-            required
-        ></textarea>
+    <input
+        type="hidden"
+        name="_captcha"
+        value="false"
+    >
 
-        <button type="submit">
-            Send Feedback
-        </button>
+    <button type="submit">
+        Send Feedback
+    </button>
 
-    </form>
+</form>
 
-    <p id="feedbackResult"></p>
-
-</section>
+<p id="feedbackResult"></p>
 
 <section id="game">
     <h2 class="title">Secret
