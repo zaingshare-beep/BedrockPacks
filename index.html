@@ -225,73 +225,98 @@ Carefully selected content.
 </section>
 
 <form
-    id="feedbackForm"
-    action="https://formsubmit.co/zain.gshare@gmail.com"
-    method="POST"
->
+<section id="feedback" class="feedback-section">
+    <h2 class="title">💬 Feedback</h2>
 
-    <input
-        type="text"
-        name="name"
-        id="feedbackName"
-        placeholder="Your name"
-        required
+    <p class="feedback-subtitle">
+        Tell us what you think about our website!
+    </p>
+
+    <form
+        id="feedbackForm"
+        action="https://formsubmit.co/zain.gshare@gmail.com"
+        method="POST"
     >
 
-    <input
-        type="email"
-        name="email"
-        id="feedbackEmail"
-        placeholder="Your email"
-        required
-    >
+        <!-- NAME -->
+        <label for="feedbackName">Your Name</label>
 
-    <select
-        name="rating"
-        id="feedbackRating"
-        required
-    >
-        <option value="">Rate our website</option>
-        <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
-        <option value="4">⭐⭐⭐⭐ Very Good</option>
-        <option value="3">⭐⭐⭐ Good</option>
-        <option value="2">⭐⭐ Needs Improvement</option>
-        <option value="1">⭐ Poor</option>
-    </select>
+        <input
+            type="text"
+            id="feedbackName"
+            name="name"
+            placeholder="Enter your name"
+            required
+        >
 
-    <textarea
-        name="message"
-        id="feedbackMessage"
-        placeholder="Write your feedback..."
-        rows="6"
-        required
-    ></textarea>
+        <!-- EMAIL -->
+        <label for="feedbackEmail">Your Email</label>
 
-    <input
-        type="hidden"
-        name="_subject"
-        value="New BedrockPacks Feedback"
-    >
+        <input
+            type="email"
+            id="feedbackEmail"
+            name="email"
+            placeholder="Enter your email"
+            required
+        >
 
-    <input
-        type="hidden"
-        name="_template"
-        value="table"
-    >
+        <!-- STARS -->
+        <label>How would you rate the website?</label>
 
-    <input
-        type="hidden"
-        name="_captcha"
-        value="false"
-    >
+        <div class="stars">
 
-    <button type="submit">
-        Send Feedback
-    </button>
+            <input type="radio" id="star5" name="rating" value="5" required>
+            <label for="star5">★</label>
 
-</form>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4">★</label>
 
-<p id="feedbackResult"></p>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3">★</label>
+
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2">★</label>
+
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1">★</label>
+
+        </div>
+
+        <!-- MESSAGE -->
+        <label for="feedbackMessage">Your Feedback</label>
+
+        <textarea
+            id="feedbackMessage"
+            name="message"
+            placeholder="Write your feedback here..."
+            rows="6"
+            required
+        ></textarea>
+
+        <input
+            type="hidden"
+            name="_subject"
+            value="New BedrockPacks Feedback"
+        >
+
+        <input
+            type="hidden"
+            name="_template"
+            value="table"
+        >
+
+        <input
+            type="hidden"
+            name="_captcha"
+            value="false"
+        >
+
+        <button type="submit">
+            📩 Send Feedback
+        </button>
+
+    </form>
+</section>
 
 <section id="game">
     <h2 class="title">Secret
