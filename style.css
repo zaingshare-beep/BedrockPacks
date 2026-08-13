@@ -34,3 +34,115 @@ footer{padding:30px 6%;display:flex;justify-content:space-between;color:#888;bor
 .captcha-block.correct{background:#57d163}
 #loginMessage,#captchaMessage{min-height:20px}
 @media(max-width:800px){.cards,.feature-grid{grid-template-columns:1fr}nav{display:none}.search{flex-direction:column}footer{flex-direction:column;gap:10px}}
+/* =========================
+   FEEDBACK
+========================= */
+
+.feedback-section {
+    padding: 70px 6%;
+    background: #0d1117;
+    text-align: center;
+}
+
+.feedback-subtitle {
+    color: #aeb5c2;
+    margin-bottom: 30px;
+}
+
+#feedbackForm {
+    width: 100%;
+    max-width: 650px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+}
+
+#feedbackForm label {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+#feedbackForm input[type="text"],
+#feedbackForm input[type="email"],
+#feedbackForm textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #343b49;
+    border-radius: 10px;
+    background: #171b24;
+    color: white;
+    font-size: 16px;
+    outline: none;
+}
+
+#feedbackForm input:focus,
+#feedbackForm textarea:focus {
+    border-color: #57d163;
+}
+
+/* STARS */
+
+.stars {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 5px;
+    margin: 5px 0 10px;
+}
+
+.stars input {
+    display: none;
+}
+
+.stars label {
+    font-size: 42px !important;
+    color: #555;
+    cursor: pointer;
+    transition: 0.2s;
+    margin: 0 !important;
+}
+
+.stars label:hover,
+.stars label:hover ~ label,
+.stars input:checked ~ label {
+    color: #ffd43b;
+    transform: scale(1.05);
+}
+
+/* SEND BUTTON */
+
+#feedbackForm button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #57d163;
+    color: #071009;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#feedbackForm button:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .feedback-section {
+        padding: 50px 5%;
+    }
+
+    .stars label {
+        font-size: 36px !important;
+    }
+
+}
